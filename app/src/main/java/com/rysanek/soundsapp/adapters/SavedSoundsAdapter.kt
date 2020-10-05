@@ -22,7 +22,7 @@ class SavedSoundsAdapter(
     
     override fun onBindViewHolder(holder: SavedSoundsAdapter.SavedSoundViewHolder, position: Int) {
         val addedRecording = recordingList[position]
-        holder.itemView.apply {
+        holder.itemView.apply {   
             tvName.text = addedRecording.name
             val seconds = TimeUnit.MILLISECONDS.toSeconds(addedRecording.duration).toString()
             tvDuration.text = "$seconds secs"

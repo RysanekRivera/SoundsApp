@@ -3,34 +3,51 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Original AppCompat attributes. -->
         <item name="colorPrimary">@color/md_blue_900</item>
-        <item name="colorSecondary">@color/md_blue_500</item>
-        <item name="android:colorBackground">@color/md_blue_700</item>
+        <item name="colorSecondary">@color/md_blue_900</item>
+        <item name="android:colorBackground">#FF1976D2</item>
         <item name="colorError">@color/errorColor</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/status_bar_color</item>
+        <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor">@null</item>
+        <item name="snackbarStyle">@style/SoundSnackBarStyle</item>
+        <item name="snackbarTextViewStyle">@style/SoundSnackBarStyle.TextView</item>
         
-        <!-- New MaterialComponents attributes. -->
-        <item name="colorPrimaryVariant">@android:color/white</item>
-        <item name="colorSecondaryVariant">@color/colorAccent</item>
         <!--> toolbar color -->
-        <item name="colorSurface">@color/md_blue_700</item>
-        <item name="colorOnPrimary">@color/md_blue_50</item>
-        <item name="colorOnSecondary">@color/md_blue_50</item>
-        <item name="colorOnBackground">@color/md_blue_50</item>
+        <item name="colorSurface">@color/transparent</item>
+        <item name="colorOnPrimary">@color/yellow</item>
+        <item name="colorOnSecondary">@color/red</item>
+        <item name="colorOnBackground">@color/colorAccent</item>
         <item name="colorOnError">@android:color/black</item>
-        <item name="colorOnSurface">@color/colorAccent</item>
-        <item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline1</item>
-        <item name="textAppearanceHeadline2">@style/TextAppearance.MaterialComponents.Headline2</item>
-        <item name="textAppearanceHeadline3">@style/TextAppearance.MaterialComponents.Headline3</item>
-        <item name="textAppearanceHeadline4">@style/TextAppearance.MaterialComponents.Headline4</item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.MaterialComponents.Headline5</item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6</item>
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1</item>
-        <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2</item>
-        <item name="textAppearanceBody1">@style/TextAppearance.MaterialComponents.Body1</item>
-        <item name="textAppearanceBody2">@style/TextAppearance.MaterialComponents.Body2</item>
-        <item name="textAppearanceCaption">@style/TextAppearance.MaterialComponents.Caption</item>
-        <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
-        <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.Overline</item>
-        
+        <item name="colorOnSurface">@color/md_blue_900</item>
+        <item name="iconTint">@color/colorAccent</item>
+    </style>
+    
+    <style name="BottomNavStyle" parent="AppTheme">
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+    </style>
+    
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+    
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorOnPrimary">@color/md_blue_900</item>
+    </style>
+    
+    <style name="SoundSnackBarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:background">@color/yellow</item>
+        <item name="backgroundTint">@color/yellow</item>
+        <item name="backgroundColor">@color/yellow</item>
+        <item name="actionTextColorAlpha">1</item>
+        <item name="elevation">8dp</item>
+        <item name="android:alpha">1</item>
+    </style>
+    
+    <style name="SoundSnackBarStyle.TextView" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:alpha">1</item>
     </style>
     
 </resources>

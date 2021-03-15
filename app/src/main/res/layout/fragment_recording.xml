@@ -7,14 +7,66 @@
     tools:context=".ui.fragments.RecordingFragment">
     
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Recording Fragment"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btRecord"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/record"
+        android:textColor="@color/colorAccent"
+        app:icon="@drawable/ic_record"
+        app:iconTint="@color/red"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:strokeColor="@color/colorAccent"
+        app:strokeWidth="2dp" />
+    
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btStop"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:gravity="center"
+        android:text="@string/stop"
+        android:textColor="@color/colorAccent"
+        app:icon="@drawable/ic_stop"
+        app:iconTint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/btRecord"
+        app:layout_constraintStart_toEndOf="@+id/btRecord"
+        app:layout_constraintTop_toTopOf="@+id/btRecord"
+        app:strokeColor="@color/colorAccent"
+        app:strokeWidth="2dp" />
+    
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btPlay"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:gravity="center"
+        android:text="@string/play"
+        android:textColor="@color/colorAccent"
+        app:icon="@drawable/ic_play"
+        app:iconTint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/btStop"
+        app:layout_constraintStart_toEndOf="@+id/btStop"
+        app:layout_constraintTop_toTopOf="@+id/btStop"
+        app:strokeColor="@color/colorAccent"
+        app:strokeWidth="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,9 +4,10 @@ import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.media.MediaPlayer
-import android.media.MediaRecorder
 import androidx.room.Room
-import com.rysanek.soundsapp.db.RecordingsDataBase
+import com.rysanek.soundsapp.data.local.db.RecordingsDao
+import com.rysanek.soundsapp.data.local.db.RecordingsDataBase
+import com.rysanek.soundsapp.data.repository.SoundsRepository
 import com.rysanek.soundsapp.utils.Constants.RECORDINGS_DATABASE_NAME
 import dagger.Module
 import dagger.Provides
@@ -48,4 +49,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideContentResolver(context: Context): ContentResolver = context.contentResolver
+    
+    @Singleton
+    @Provides
+    fun provideRepository(dao: RecordingsDao) = SoundsRepository(dao)
 }

@@ -27,12 +27,12 @@
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/record"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/white"
         app:icon="@drawable/ic_record"
         app:iconTint="@color/red"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        app:strokeColor="@color/colorAccent"
+        app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
     
     <com.google.android.material.button.MaterialButton
@@ -43,13 +43,13 @@
         android:layout_marginStart="24dp"
         android:gravity="center"
         android:text="@string/stop"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/white"
         app:icon="@drawable/ic_stop"
-        app:iconTint="@color/colorAccent"
+        app:iconTint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/btRecord"
         app:layout_constraintStart_toEndOf="@+id/btRecord"
         app:layout_constraintTop_toTopOf="@+id/btRecord"
-        app:strokeColor="@color/colorAccent"
+        app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
     
     <com.google.android.material.button.MaterialButton
@@ -60,13 +60,13 @@
         android:layout_marginStart="24dp"
         android:gravity="center"
         android:text="@string/play"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/white"
         app:icon="@drawable/ic_play"
-        app:iconTint="@color/colorAccent"
+        app:iconTint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/btStop"
         app:layout_constraintStart_toEndOf="@+id/btStop"
         app:layout_constraintTop_toTopOf="@+id/btStop"
-        app:strokeColor="@color/colorAccent"
+        app:strokeColor="@color/white"
         app:strokeWidth="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

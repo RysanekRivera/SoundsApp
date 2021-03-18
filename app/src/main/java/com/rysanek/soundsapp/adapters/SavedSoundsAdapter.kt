@@ -1,34 +1,57 @@
 package com.rysanek.soundsapp.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.rysanek.soundsapp.R
-import com.rysanek.soundsapp.data.Recording
-import kotlinx.android.synthetic.main.single_saved_sound.view.*
+import com.rysanek.soundsapp.data.local.db.entities.Recording
+import com.rysanek.soundsapp.databinding.SingleSavedSoundBinding
 import java.util.concurrent.TimeUnit
 
-class SavedSoundsAdapter(
-        val recordingList: List<Recording>
-): RecyclerView.Adapter<SavedSoundsAdapter.SavedSoundViewHolder>() {
+class SavedSoundsAdapter(): RecyclerView.Adapter<SavedSoundsAdapter.SavedSoundViewHolder>() {
     
-    inner class SavedSoundViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    private val diffCallback = object: DiffUtil.ItemCallback<Recording>() {
+        override fun areItemsTheSame(oldItem: Recording, newItem: Recording): Boolean {
+           return oldItem == newItem
+        }
     
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedSoundViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.single_saved_sound, parent, false)
-        return SavedSoundViewHolder(view)
-    }
-    
-    override fun onBindViewHolder(holder: SavedSoundsAdapter.SavedSoundViewHolder, position: Int) {
-        val addedRecording = recordingList[position]
-        holder.itemView.apply {   
-            tvName.text = addedRecording.name
-            val seconds = TimeUnit.MILLISECONDS.toSeconds(addedRecording.duration).toString()
-            tvDuration.text = "$seconds secs"
+        override fun areContentsTheSame(oldItem: Recording, newItem: Recording): Boolean {
+            return oldItem == newItem
         }
     }
     
-    override fun getItemCount() = recordingList.size
+    val differ = AsyncListDiffer(this, diffCallback)
+    
+    class SavedSoundViewHolder(private val binding: SingleSavedSoundBinding): RecyclerView.ViewHolder(binding.root){
+        
+        fun bind(recording: Recording) {
+            binding.tvName.text = recording.name
+            val seconds = TimeUnit.MILLISECONDS.toSeconds(recording.duration).toString()
+            binding.tvDuration.setText("$seconds secs")
+        }
+        
+    
+        companion object{
+            fun from(parent: ViewGroup): SavedSoundViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val view = SingleSavedSoundBinding.inflate(layoutInflater, parent, false)
+                return SavedSoundViewHolder(view)
+            }
+        }
+    }
+    
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedSoundViewHolder {
+        return SavedSoundViewHolder.from(parent)
+    }
+    
+    override fun onBindViewHolder(holder: SavedSoundViewHolder, position: Int) {
+        val recording = differ.currentList[position]
+        if (recording != null) {
+            holder.bind(recording)
+        }
+    }
+    
+    override fun getItemCount() = differ.currentList.size
     
 }

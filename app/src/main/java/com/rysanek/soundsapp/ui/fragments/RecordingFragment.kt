@@ -2,8 +2,10 @@ package com.rysanek.soundsapp.ui.fragments
 
 import android.content.ContentResolver
 import android.content.ContentValues
+import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
@@ -14,8 +16,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.rysanek.soundsapp.data.local.db.entities.Recording
 import com.rysanek.soundsapp.databinding.FragmentRecordingBinding
 import com.rysanek.soundsapp.utils.showSnackBar
+import com.rysanek.soundsapp.viewmodels.SoundsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.FileDescriptor
 import java.io.IOException
@@ -30,6 +35,11 @@ import kotlin.Exception
 class RecordingFragment: Fragment() {
     
     private lateinit var binding: FragmentRecordingBinding
+    val soundsViewModel: SoundsViewModel by viewModels()
+    
+    private lateinit var fileName: String
+    private var audioUri: Uri? = null
+    private var file: ParcelFileDescriptor? = null
     
     private var mediaRecorder: MediaRecorder? = null
     
@@ -63,6 +73,10 @@ class RecordingFragment: Fragment() {
                     mediaRecorder?.reset()
                     mediaRecorder?.release()
                     mediaRecorder = null
+                    
+                    
+                    val recording = Recording(fileName, 1000, audioUri.toString())
+                    soundsViewModel.insertToDatabase(recording)
                     Log.d("btStop", "media recorderStatus: $mediaRecorder")
                 } catch (e: IllegalStateException) {
                     Log.d("btStop", "IllegalStateException: ${e.message}")
@@ -89,7 +103,7 @@ class RecordingFragment: Fragment() {
     @Throws(IOException::class)
     private fun startRecording() {
         try {
-            val fileName = "sounds_recording_${date()}"
+            fileName = "sounds_recording_${date()}"
             Log.d("startRecording", "filename: $fileName")
             values.put(MediaStore.Audio.Media.TITLE, fileName)
             values.put(MediaStore.Audio.Media.DATE_ADDED, date())
@@ -100,12 +114,12 @@ class RecordingFragment: Fragment() {
             Log.d("Mime", values[MediaStore.Audio.Media.MIME_TYPE].toString())
             Log.d("DisplayName", values[MediaStore.Audio.Media.DISPLAY_NAME].toString())
             
-            val audioUri = contentResolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values)
-            val file = contentResolver.openFileDescriptor(audioUri!!, "w")
+            audioUri = contentResolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values)
+            file = contentResolver.openFileDescriptor(audioUri!!, "w")
             
-            if (file != null) {
+            file?.let {
                 Log.d("startRecording", "File is not null")
-                setupAndStartMediaRecorder(file)
+                setupAndStartMediaRecorder(it)
             }
         } catch (e: IllegalArgumentException) {
             Log.d("startRecording", e.message.toString())

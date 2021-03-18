@@ -1,28 +1,42 @@
 package com.rysanek.soundsapp.ui.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rysanek.soundsapp.R
 import com.rysanek.soundsapp.adapters.SavedSoundsAdapter
-import com.rysanek.soundsapp.data.Recording
-import kotlinx.android.synthetic.main.fragment_saved.*
+import com.rysanek.soundsapp.data.local.db.entities.Recording
+import com.rysanek.soundsapp.databinding.FragmentSavedBinding
+import com.rysanek.soundsapp.viewmodels.SoundsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SavedFragment: Fragment(R.layout.fragment_saved) {
     
-   
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val exampleRecord1 = Recording("Example Sound1", 10000)
-        val exampleRecord2 = Recording("Example Sound2", 5000)
-        val exampleRecord3 = Recording("Example Sound3", 7000)
-        val soundRecords = listOf(exampleRecord1, exampleRecord2, exampleRecord3)
-    
-        val adapter = SavedSoundsAdapter(soundRecords)
-        rvSaved.adapter = adapter
-        rvSaved.layoutManager = LinearLayoutManager(requireContext())
+    private lateinit var binding: FragmentSavedBinding
+    private val soundsViewModel: SoundsViewModel by viewModels()
+    private var recordingList = listOf<Recording>()
         
-        super.onViewCreated(view, savedInstanceState)
+        override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentSavedBinding.inflate(layoutInflater)
+        val savedAdapter = SavedSoundsAdapter()
+        soundsViewModel.getAllRecordings().observe(viewLifecycleOwner){
+            savedAdapter.differ.submitList(it)
+        }
+        
+        binding.rvSaved.apply {
+            adapter = savedAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+        
+        return binding.root
     }
-    
 }

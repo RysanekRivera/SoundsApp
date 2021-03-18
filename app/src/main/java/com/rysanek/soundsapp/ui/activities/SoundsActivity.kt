@@ -1,46 +1,39 @@
 package com.rysanek.soundsapp.ui.activities
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.rysanek.soundsapp.R
-import com.rysanek.soundsapp.ui.fragments.HomeFragment
-import com.rysanek.soundsapp.ui.fragments.RecordingFragment
-import com.rysanek.soundsapp.ui.fragments.SavedFragment
+import com.rysanek.soundsapp.databinding.ActivitySoundsBinding
 import com.rysanek.soundsapp.utils.setUpSystemWindow
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.sounds_nav_host_fragment.*
 
 @AndroidEntryPoint
 class SoundsActivity: AppCompatActivity() {
+    private lateinit var binding: ActivitySoundsBinding
+    private lateinit var navController: NavController
     
     override fun onCreate(savedInstanceState: Bundle?) {
         setUpSystemWindow()
         super.onCreate(savedInstanceState)
+        binding = ActivitySoundsBinding.inflate(layoutInflater)
         checkPermissions()
-        setContentView(R.layout.sounds_nav_host_fragment)
-        setCurrentFragment(HomeFragment())
+        setContentView(binding.root)
         
-        bottomNavigationView.setOnNavigationItemSelectedListener {
+        navController = findNavController(R.id.navHostFragment)
+        
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.miPlay -> setCurrentFragment(HomeFragment())
-                R.id.miRecord -> setCurrentFragment(RecordingFragment())
-                R.id.miSaved -> setCurrentFragment(SavedFragment())
+                R.id.miPlay -> navController.navigate(R.id.homeFragment)
+                R.id.miRecord -> navController.navigate(R.id.recordingFragment)
+                R.id.miSaved -> navController.navigate(R.id.savedFragment)
             }
             true
-        }
-    }
-    
-    private fun setCurrentFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragment, fragment)
-            commit()
         }
     }
     

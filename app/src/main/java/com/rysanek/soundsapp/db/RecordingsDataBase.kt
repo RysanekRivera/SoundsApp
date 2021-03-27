@@ -1,8 +1,8 @@
-package com.rysanek.soundsapp.data.local.db
+package com.rysanek.soundsapp.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.rysanek.soundsapp.data.local.db.entities.Recording
+import com.rysanek.soundsapp.db.entities.Recording
 
 @Database(
     entities = [Recording::class],

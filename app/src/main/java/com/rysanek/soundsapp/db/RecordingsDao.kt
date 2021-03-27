@@ -1,8 +1,8 @@
-package com.rysanek.soundsapp.data.local.db
+package com.rysanek.soundsapp.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.rysanek.soundsapp.data.local.db.entities.Recording
+import com.rysanek.soundsapp.db.entities.Recording
 
 @Dao
 interface RecordingsDao {

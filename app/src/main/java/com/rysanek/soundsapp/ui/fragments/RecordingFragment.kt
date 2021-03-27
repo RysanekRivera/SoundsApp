@@ -2,7 +2,6 @@ package com.rysanek.soundsapp.ui.fragments
 
 import android.content.ContentResolver
 import android.content.ContentValues
-import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
@@ -14,15 +13,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.rysanek.soundsapp.data.local.db.entities.Recording
+import com.rysanek.soundsapp.R
+import com.rysanek.soundsapp.db.entities.Recording
 import com.rysanek.soundsapp.databinding.FragmentRecordingBinding
 import com.rysanek.soundsapp.utils.showSnackBar
 import com.rysanek.soundsapp.viewmodels.SoundsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.FileDescriptor
+import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -35,7 +34,7 @@ import kotlin.Exception
 class RecordingFragment: Fragment() {
     
     private lateinit var binding: FragmentRecordingBinding
-    val soundsViewModel: SoundsViewModel by viewModels()
+    private val soundsViewModel: SoundsViewModel by viewModels()
     
     private lateinit var fileName: String
     private var audioUri: Uri? = null
@@ -74,7 +73,6 @@ class RecordingFragment: Fragment() {
                     mediaRecorder?.release()
                     mediaRecorder = null
                     
-                    
                     val recording = Recording(fileName, 1000, audioUri.toString())
                     soundsViewModel.insertToDatabase(recording)
                     Log.d("btStop", "media recorderStatus: $mediaRecorder")
@@ -103,11 +101,11 @@ class RecordingFragment: Fragment() {
     @Throws(IOException::class)
     private fun startRecording() {
         try {
-            fileName = "sounds_recording_${date()}"
+            fileName = "sounds_rec_${date()}"
             Log.d("startRecording", "filename: $fileName")
             values.put(MediaStore.Audio.Media.TITLE, fileName)
             values.put(MediaStore.Audio.Media.DATE_ADDED, date())
-            values.put(MediaStore.Audio.Media.MIME_TYPE, "audio/aac")
+            values.put(MediaStore.Audio.Media.MIME_TYPE, "audio/mp4")
             values.put(MediaStore.Audio.Media.DISPLAY_NAME, fileName)
             Log.d("Title", values[MediaStore.Audio.Media.TITLE].toString())
             Log.d("Date", values[MediaStore.Audio.Media.DATE_ADDED].toString())

@@ -1,12 +1,10 @@
 package com.rysanek.soundsapp.viewmodels
 
-import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rysanek.soundsapp.data.local.db.entities.Recording
+import com.rysanek.soundsapp.db.entities.Recording
 import com.rysanek.soundsapp.data.repository.SoundsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

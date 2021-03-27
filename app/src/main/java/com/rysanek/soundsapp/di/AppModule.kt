@@ -5,8 +5,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.media.MediaPlayer
 import androidx.room.Room
-import com.rysanek.soundsapp.data.local.db.RecordingsDao
-import com.rysanek.soundsapp.data.local.db.RecordingsDataBase
+import com.rysanek.soundsapp.db.RecordingsDao
+import com.rysanek.soundsapp.db.RecordingsDataBase
 import com.rysanek.soundsapp.data.repository.SoundsRepository
 import com.rysanek.soundsapp.utils.Constants.RECORDINGS_DATABASE_NAME
 import dagger.Module

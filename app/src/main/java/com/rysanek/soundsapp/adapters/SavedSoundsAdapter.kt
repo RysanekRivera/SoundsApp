@@ -1,11 +1,12 @@
 package com.rysanek.soundsapp.adapters
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.rysanek.soundsapp.data.local.db.entities.Recording
+import com.rysanek.soundsapp.db.entities.Recording
 import com.rysanek.soundsapp.databinding.SingleSavedSoundBinding
 import java.util.concurrent.TimeUnit
 
@@ -28,7 +29,7 @@ class SavedSoundsAdapter(): RecyclerView.Adapter<SavedSoundsAdapter.SavedSoundVi
         fun bind(recording: Recording) {
             binding.tvName.text = recording.name
             val seconds = TimeUnit.MILLISECONDS.toSeconds(recording.duration).toString()
-            binding.tvDuration.setText("$seconds secs")
+            binding.tvDuration.text = "$seconds secs"
         }
         
     
@@ -49,7 +50,17 @@ class SavedSoundsAdapter(): RecyclerView.Adapter<SavedSoundsAdapter.SavedSoundVi
         val recording = differ.currentList[position]
         if (recording != null) {
             holder.bind(recording)
+            holder.itemView.setOnClickListener {
+                onItemClickListener?.let {
+                    it(recording.fileLocation)
+                }
+            }
         }
+    }
+    
+    private var onItemClickListener:((String) -> Unit)? = null
+    fun setOnItemClickListener(listener:(String) -> Unit) {
+        onItemClickListener = listener
     }
     
     override fun getItemCount() = differ.currentList.size

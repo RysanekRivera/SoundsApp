@@ -1,7 +1,7 @@
 package com.rysanek.soundsapp.data.repository
 
-import com.rysanek.soundsapp.data.local.db.RecordingsDao
-import com.rysanek.soundsapp.data.local.db.entities.Recording
+import com.rysanek.soundsapp.db.RecordingsDao
+import com.rysanek.soundsapp.db.entities.Recording
 
 class SoundsRepository(
     private val dao: RecordingsDao

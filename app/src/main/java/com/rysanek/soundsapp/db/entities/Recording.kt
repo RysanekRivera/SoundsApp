@@ -1,4 +1,4 @@
-package com.rysanek.soundsapp.data.local.db.entities
+package com.rysanek.soundsapp.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

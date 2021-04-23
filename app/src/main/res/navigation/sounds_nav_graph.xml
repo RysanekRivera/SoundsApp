@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sounds_nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/playFragment">
     
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.rysanek.soundsapp.ui.fragments.HomeFragment"
+        android:id="@+id/playFragment"
+        android:name="com.rysanek.soundsapp.ui.fragments.PlayFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_play" />
     <fragment
         android:id="@+id/recordingFragment"
         android:name="com.rysanek.soundsapp.ui.fragments.RecordingFragment"

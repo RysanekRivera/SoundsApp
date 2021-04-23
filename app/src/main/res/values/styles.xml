@@ -50,4 +50,8 @@
         <item name="android:alpha">1</item>
     </style>
     
+    <style name="SeekBar_color" parent="Widget.AppCompat.SeekBar">
+        <item name="colorAccent">@color/yellow</item>
+    </style>
+    
 </resources>

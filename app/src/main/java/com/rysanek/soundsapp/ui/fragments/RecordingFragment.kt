@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
+import android.os.SystemClock
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,13 +34,15 @@ import kotlin.Exception
 @AndroidEntryPoint
 class RecordingFragment: Fragment() {
     
-    private lateinit var binding: FragmentRecordingBinding
+    private var _binding: FragmentRecordingBinding? = null
+    private val binding get() = _binding!!
     private val soundsViewModel: SoundsViewModel by viewModels()
     
     private lateinit var fileName: String
     private var audioUri: Uri? = null
     private var file: ParcelFileDescriptor? = null
-    
+    private var initialTime: Long? = null
+    private var duration: Long? = null
     private var mediaRecorder: MediaRecorder? = null
     
     @Inject
@@ -57,7 +60,7 @@ class RecordingFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         Log.d("onCreate", "mediaRecorder status ${mediaRecorder.toString()}")
-        binding = FragmentRecordingBinding.inflate(layoutInflater)
+        _binding = FragmentRecordingBinding.inflate(layoutInflater)
         
         binding.btRecord.setOnClickListener {
             startRecording()
@@ -67,13 +70,14 @@ class RecordingFragment: Fragment() {
         binding.btStop.setOnClickListener {
             if (mediaRecorder != null){
                 try {
+                    duration = System.currentTimeMillis() - initialTime!!
                     Log.d("btStop", "media recorderStatus: $mediaRecorder")
                     mediaRecorder?.stop()
                     mediaRecorder?.reset()
                     mediaRecorder?.release()
                     mediaRecorder = null
                     
-                    val recording = Recording(fileName, 1000, audioUri.toString())
+                    val recording = Recording(fileName, duration!!, audioUri.toString())
                     soundsViewModel.insertToDatabase(recording)
                     Log.d("btStop", "media recorderStatus: $mediaRecorder")
                 } catch (e: IllegalStateException) {
@@ -101,6 +105,7 @@ class RecordingFragment: Fragment() {
     @Throws(IOException::class)
     private fun startRecording() {
         try {
+            initialTime = System.currentTimeMillis()
             fileName = "sounds_rec_${date()}"
             Log.d("startRecording", "filename: $fileName")
             values.put(MediaStore.Audio.Media.TITLE, fileName)
@@ -163,18 +168,22 @@ class RecordingFragment: Fragment() {
     }
     
     override fun onPause() {
+        super.onPause()
         Log.d("onPause", "MediaRecorder status: ${mediaRecorder.toString()}")
         mediaRecorder?.release()
         Log.d("onPause", "MediaRecorder status: ${mediaRecorder.toString()}")
-        super.onPause()
     }
     
     override fun onStop() {
+        super.onStop()
         Log.d("onStop", "MediaRecorder status: ${mediaRecorder.toString()}")
         mediaRecorder?.release()
         mediaRecorder = null
         Log.d("onStop", "MediaRecorder status: ${mediaRecorder.toString()}")
-        super.onStop()
     }
     
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

@@ -18,7 +18,7 @@ import com.rysanek.soundsapp.viewmodels.SoundsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SavedFragment: Fragment(R.layout.fragment_saved) {
+class SavedFragment: Fragment() {
     
     private lateinit var binding: FragmentSavedBinding
     private lateinit var savedAdapter: SavedSoundsAdapter

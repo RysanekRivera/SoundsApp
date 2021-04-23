@@ -29,7 +29,7 @@ class SoundsActivity: AppCompatActivity() {
         
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.miPlay -> navController.navigate(R.id.homeFragment)
+                R.id.miPlay -> navController.navigate(R.id.playFragment)
                 R.id.miRecord -> navController.navigate(R.id.recordingFragment)
                 R.id.miSaved -> navController.navigate(R.id.savedFragment)
             }
